@@ -1,50 +1,64 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var addButton = document.createElement('button');
+    let addButton = document.createElement('button');
         addButton.innerText = 'Generate Die';
         addButton.className="addButton";
     document.body.appendChild(addButton)
-    var rollButton = document.createElement('button');
+    let rollButton = document.createElement('button');
         rollButton.innerText="Reroll Dice";
         rollButton.className="rollButton";
     document.body.appendChild(rollButton);
-    var sumButton = document.createElement('button');
+    let sumButton = document.createElement('button');
         sumButton.innerText ="Sum Die";
         sumButton.className = 'sumButton';
     document.body.appendChild(sumButton);
-    var Die = function() {
-        this.roll = function() {
-            var result = Math.floor(Math.random()*6+1);
-            this.value = result;
+
+    class Dice {
+        constructor () {
+            this.numOfFaces = numOfFaces;
+            this.sum = 0;
+            this.faceUpValue = null;
         }
-    }
-    addButton.addEventListener('click', function() {
-        var diceHolder = document.createElement('div');
-            diceHolder.className='diceHolder';
-        document.body.appendChild(diceHolder);
-        var newDice = new Die()
-        newDice.roll()
-        diceHolder.innerText = newDice.value;
-        $('div').dblclick(function() {
+    roll(faceUpValue) {
+        rollButton.addEventListener('click', function() {
+        this.faceUpValue = Math.floor(Math.random() * this.numOfFaces + 1);
+        return this.faceUpValue;
+        }); 
+    };
+};
+        addButton.addEventListener('click', function() {
+            this.numOfDice = 0;
+            this.newDiv = document.createElement('div');
+            this.newDiv.className='dice';
+            this.numOfDice++;
+            this.newDiv.id=numOfDice;
+            this.newDice = newDie();
+            this.newDice.roll();
+            this.diceHolder.innerText = newDice.faceUpValue;
+        
+       /*     $('div').mouseover(function() {
+                newDice.roll()
+                this.innerText=newDice.faceUpValue;
+        });
+        $('div').mouseout(function() {
             this.remove();
-        })
+        })*/
     })
-    rollButton.addEventListener('click', function() {
-        $('div').each(function(){
-            var num = Math.floor(Math.random()*6+1);
-            $(this).text(num);
-        })
-    });
-    summButton.addEventListener('click', function() {
-        var sumArray = [];
+        
+         
+     
+    sum(); 
+    sumButton.addEventListener('click', function() {
+        this.sum = this.sum + this.faceUpValue;
+        let sumArray = [];
         $('div').each(function() {
-            sumArray.push(parseInt($(this).text()));
-        })
+        this.sumArray.push(parseInt($(this).text()));
+        });
         var sum=0;
         for (var i=0; i<sumArray.length; i++) {
             sum += sumArray[i];
-        }
-        alert("The sum equals "+sum);
-    });
+        };
+        alert("The sum equals "+ this.sum);
+    });    
 });
 
 
